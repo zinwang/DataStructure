@@ -1,4 +1,4 @@
-// infix to posfix
+//expression tree infix to posfix
 
 #include <iostream>
 #include <string>
@@ -76,23 +76,23 @@ bool verify_expr(std::string s){
 		
 		if(tbl.count(ctmp)){
 			if(tbl[ctmp]==2 && i==0){
-				std::cout<<"test1\n";
+				//std::cout<<"test1\n";
 				return 0;
 			}
 		}else if( (ctmp <'0' || ctmp >'9') && ctmp!=' ' && ctmp!='\n'){
-			std::cout<<int(ctmp)<<":"<<i<<" test2\n";
+			//std::cout<<int(ctmp)<<":"<<i<<" test2\n";
 			return 0;
 		}
 		
 		if(tbl.count(ctmp) && tbl.count(prev_char)){
 			if(tbl[ctmp]>0 && tbl[prev_char]>0){
-				std::cout<<"test3\n";
+				//std::cout<<"test3\n";
 				return 0;
 			}
 		}
 
 		if(cnt<0){
-			std::cout<<"test4\n";
+			//std::cout<<"test4\n";
 			return 0;
 		}
 		prev_char=ctmp;
@@ -124,7 +124,7 @@ int main(){
 	if(verify_expr(s)){
 		std::cout<<conversion(s)<<"\n";
 	}else{
-		std::cout<<"The input expreesion is not valid!\n";
+		std::cout<<"The input expression is not valid!\n";
 	}
 
 
