@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-template <class T>
+template <class T=int>
 class Queue{
 	private:
 		T* queue;
@@ -72,7 +72,9 @@ void Queue<T>::pop(){
 
 
 int main(){
-	Queue <int> q = Queue<int>(5);
+	//Queue <int> q = Queue<int>(5);
+	//Queue <int> q(5);
+	Queue <> q(5); //Queue q(5); for c++17
 	q.push(10);
 	q.push(21);
 	std::cout<<q.get_front()<<"\n";
