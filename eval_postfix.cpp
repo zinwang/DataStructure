@@ -1,12 +1,15 @@
-//expression tree infix to posfix
+//expression tree infix to posfix, and evaluate the expression 
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <stack>
 #include <map>
 #include <algorithm>
 
 std::map <char,int> tbl={{')',0},{'(',0},{'+',1},{'-',1},{'*',2},{'/',2},{'%',2}};
+
+std::map <char,int> opr_tbl={{'+',1},{'-',2},{'*',3},{'/',4},{'%',5}};
 
 
 
@@ -107,6 +110,54 @@ bool verify_expr(std::string s){
 
 
 
+int eval_value(std::string pfx_str){
+	std::stack <int> value_stk;
+	std::istringstream tmp_stream(pfx_str);
+	std::string stmp;
+	while(std::getline(tmp_stream,stmp,' ')){
+		//std::cout<<stmp<<"\n";
+		if(stmp.length()==1){
+			char ctmp = stmp[0];
+			if(opr_tbl.count(ctmp)){
+				int a = value_stk.top();
+				value_stk.pop();
+				int b = value_stk.top();
+				value_stk.pop();
+				int value_tmp;
+				switch(opr_tbl[ctmp]){
+					case 1: //+
+						value_tmp = a + b;
+						break;
+					case 2: //-
+						value_tmp = b - a;
+						break;
+					case 3: //*
+						value_tmp = a * b;
+						break;
+					case 4: // /
+						value_tmp = b / a;
+						break;
+					case 5: //%
+						value_tmp = b % a;		
+						break;
+				}
+				value_stk.push(value_tmp);
+				continue;		
+			}
+		}
+		int itmp = std::stoi(stmp);
+		//std::cout<<itmp<<"\n";
+		value_stk.push(itmp);
+		
+	}
+	int ans = value_stk.top();
+	value_stk.pop();
+	return ans;
+
+
+}
+
+
 
 
 
@@ -114,7 +165,8 @@ bool verify_expr(std::string s){
 int main(){
 	std::string s;
 	std::getline(std::cin,s);
-	
+	//std::cout<<eval_value(s)<<"\n";	
+
 	//erase space in s
 	std::string::iterator end_pos = std::remove_if(s.begin(),s.end(),isspace);
 	s.erase(end_pos,s.end());
@@ -123,9 +175,12 @@ int main(){
 	//std::cout<<verify_expr(s)<<"\n";
 	if(verify_expr(s)){
 		std::cout<<conversion(s)<<"\n";
+		std::cout<<eval_value(conversion(s))<<"\n";
+
 	}else{
 		std::cout<<"The input expression is not valid!\n";
 	}
+	
 
 
 
